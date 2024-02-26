@@ -1,4 +1,4 @@
-package ltd.clearsolutions.logback.configuration;
+package io.clearsolutions.logback.configuration;
 
 import software.amazon.awssdk.regions.internal.util.EC2MetadataUtils;
 
@@ -7,8 +7,8 @@ import java.util.Date;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import static ltd.clearsolutions.logback.util.SpecialSymbolsUtil.containsSpecialSymbolsExactlyOnce;
-import static ltd.clearsolutions.logback.util.SpecialSymbolsUtil.extractValue;
+import static io.clearsolutions.logback.util.SpecialSymbolsUtil.containsSpecialSymbolsExactlyOnce;
+import static io.clearsolutions.logback.util.SpecialSymbolsUtil.extractValue;
 
 public class CloudWatchConfiguration {
 

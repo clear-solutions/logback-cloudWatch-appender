@@ -1,7 +1,7 @@
-package ltd.clearsolutions.logback;
+package io.clearsolutions.logback;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import ltd.clearsolutions.logback.configuration.LogbackConfiguration;
+import io.clearsolutions.logback.configuration.LogbackConfiguration;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;

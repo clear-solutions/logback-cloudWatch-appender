@@ -1,6 +1,6 @@
-package ltd.clearsolutions.logback;
+package io.clearsolutions.logback;
 
-import ltd.clearsolutions.logback.configuration.CloudWatchConfiguration;
+import io.clearsolutions.logback.configuration.CloudWatchConfiguration;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
