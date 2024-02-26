@@ -1,11 +1,11 @@
-package ltd.clearsolutions.logback;
+package io.clearsolutions.logback;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Layout;
 import ch.qos.logback.core.UnsynchronizedAppenderBase;
 import ch.qos.logback.core.encoder.Encoder;
-import ltd.clearsolutions.logback.configuration.CloudWatchConfiguration;
-import ltd.clearsolutions.logback.configuration.LogbackConfiguration;
+import io.clearsolutions.logback.configuration.CloudWatchConfiguration;
+import io.clearsolutions.logback.configuration.LogbackConfiguration;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;

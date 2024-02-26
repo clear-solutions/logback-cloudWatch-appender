@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>ltd.clear-solutions</groupId>
+    <groupId>io.clear-solutions</groupId>
     <artifactId>logback-cloudWatch-appender</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>logback-cloudWatch-appender</name>
@@ -12,9 +12,9 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>17</java.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <java.version>11</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <software.amazon.awssdk.version>2.23.21</software.amazon.awssdk.version>
         <logback.version>1.4.14</logback.version>

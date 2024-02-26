@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'ltd.clear-solutions.logback-cloudWatch-appender' is invalid and this project uses 'ltd.clearsolutions.logback' instead.
+* The original package name 'io.clear-solutions.logback-cloudWatch-appender' is invalid and this project uses 'ltd.clearsolutions.logback' instead.
 
 # Getting Started
 

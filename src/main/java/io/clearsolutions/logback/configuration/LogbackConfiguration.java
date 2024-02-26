@@ -1,4 +1,4 @@
-package ltd.clearsolutions.logback.configuration;
+package io.clearsolutions.logback.configuration;
 
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.Layout;

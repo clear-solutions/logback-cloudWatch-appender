@@ -1,4 +1,4 @@
-package ltd.clearsolutions.logback;
+package io.clearsolutions.logback;
 
 public class LogEventDTO {
 

@@ -1,6 +1,6 @@
-package ltd.clearsolutions.logback.util;
+package io.clearsolutions.logback.util;
 
-import ltd.clearsolutions.logback.exception.CloudWatchAppenderException;
+import io.clearsolutions.logback.exception.CloudWatchAppenderException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
