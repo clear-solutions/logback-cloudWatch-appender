@@ -32,8 +32,9 @@ public class Worker implements Runnable {
         try {
             long lastDrainTime = System.currentTimeMillis();
             while (!Thread.currentThread().isInterrupted()) {
-                if (System.currentTimeMillis() - lastDrainTime >= thresholdTime
-                    || logs.size() >= maxSize) {
+                if ((System.currentTimeMillis() - lastDrainTime >= thresholdTime
+                    || logs.size() >= maxSize)
+                    && ! logs.isEmpty()) {
 
                     List<ILoggingEvent> buffer = new ArrayList<>();
                     logs.drainTo(buffer);

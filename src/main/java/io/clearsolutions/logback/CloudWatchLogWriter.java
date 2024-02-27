@@ -20,6 +20,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static java.util.Objects.nonNull;
@@ -63,7 +64,6 @@ public class CloudWatchLogWriter {
     }
 
     private PutLogEventsRequest putLogEventsRequest(List<LogEventDTO> logs) {
-
         var request = PutLogEventsRequest.builder()
                                          .logGroupName(configuration.getLogGroupName())
                                          .logStreamName(configuration.getLogStreamName())
@@ -75,7 +75,7 @@ public class CloudWatchLogWriter {
                                                                                 .timestamp(log.getTimestamp())
                                                                                 .build();
                                                         })
-                                                        .toList());
+                                                        .collect(Collectors.toList()));
 
         // Add the sequenceToken if it is not null
         if (nonNull(sequenceToken)) {

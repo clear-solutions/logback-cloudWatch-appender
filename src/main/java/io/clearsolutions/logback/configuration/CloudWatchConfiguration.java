@@ -7,8 +7,6 @@ import java.util.Date;
 
 import static java.util.Objects.isNull;
 import static java.util.Objects.nonNull;
-import static io.clearsolutions.logback.util.SpecialSymbolsUtil.containsSpecialSymbolsExactlyOnce;
-import static io.clearsolutions.logback.util.SpecialSymbolsUtil.extractValue;
 
 public class CloudWatchConfiguration {
 
@@ -37,30 +35,15 @@ public class CloudWatchConfiguration {
         this.retentionTimeInDays = retentionTimeInDays;
     }
 
-    private String createLogGroupName(String logGroupName) {
+    String createLogGroupName(String logGroupName) {
         if (isNull(logGroupName)) {
             return "logback";
-        }
-
-        if (containsSpecialSymbolsExactlyOnce(logGroupName)) {
-            return resolveName(logGroupName);
         }
 
         return logGroupName;
     }
 
-    private String resolveName(String name) {
-        String groupNameBaseOnEnv = extractValue(name);
-        if (groupNameBaseOnEnv.contains("env:")) {
-            String env = System.getenv(groupNameBaseOnEnv.split(":")[1]);
-            if (env != null) {
-                return name.replace("${" + groupNameBaseOnEnv + "}", env);
-            }
-        }
-        return name;
-    }
-
-    private String createLogStreamName(String logStreamName) {
+    String createLogStreamName(String logStreamName) {
         if (isNull(logStreamName)) {
             String ec2InstanceId = EC2MetadataUtils.getInstanceId();
             if (nonNull(ec2InstanceId)) {
@@ -69,11 +52,6 @@ public class CloudWatchConfiguration {
                 return new SimpleDateFormat("yyyyMMdd'T'HHmmss").format(new Date());
             }
         }
-
-        if (containsSpecialSymbolsExactlyOnce(logStreamName)) {
-            return resolveName(logStreamName);
-        }
-
         return logStreamName;
     }
 
