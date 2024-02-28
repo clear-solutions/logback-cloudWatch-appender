@@ -37,20 +37,24 @@ public class CloudWatchAppender extends UnsynchronizedAppenderBase<ILoggingEvent
     @Override
     public void start() {
         super.start();
-        var configuration = new CloudWatchConfiguration(logGroupName,
-                                                        logStreamName,
-                                                        logRegion,
-                                                        cloudWatchEndpoint,
-                                                        accessKeyId,
-                                                        secretAccessKey,
-                                                        retentionTimeDays);
-        var cloudWatchLogWriter = new CloudWatchLogWriter(configuration);
-        var logbackConfiguration = new LogbackConfiguration(layout, encoder);
+        try {
+            var configuration = new CloudWatchConfiguration(logGroupName,
+                                                            logStreamName,
+                                                            logRegion,
+                                                            cloudWatchEndpoint,
+                                                            accessKeyId,
+                                                            secretAccessKey,
+                                                            retentionTimeDays);
 
-        worker = new Thread(new Worker(logs, cloudWatchLogWriter, logbackConfiguration));
-        worker.setDaemon(true);
-        worker.setName("CloudWatchAppender-Worker");
-        worker.start();
+            var cloudWatchLogWriter = new CloudWatchLogWriter(configuration);
+            var logbackConfiguration = new LogbackConfiguration(layout, encoder);
+            worker = new Thread(new Worker(logs, cloudWatchLogWriter, logbackConfiguration));
+            worker.setDaemon(true);
+            worker.setName("CloudWatchAppender-Worker");
+            worker.start();
+        } catch (Exception e) {
+            addError("Failed to start CloudWatchAppender", e);
+        }
     }
 
     @Override
