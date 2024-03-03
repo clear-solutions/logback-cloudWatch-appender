@@ -26,13 +26,28 @@ public class CloudWatchConfiguration {
                                    String secretAccessKey,
                                    int retentionTimeInDays) {
 
-        this.logGroupName = createLogGroupName(logGroupName);
-        this.logStreamName = createLogStreamName(logStreamName);
-        this.logRegion = logRegion;
-        this.cloudWatchEndpoint = cloudWatchEndpoint;
-        this.accessKeyId = accessKeyId;
-        this.secretAccessKey = secretAccessKey;
+        this.logGroupName = removeUndefinedValue(createLogGroupName(logGroupName));
+        this.logStreamName = removeUndefinedValue(createLogStreamName(logStreamName));
+        this.logRegion = removeUndefinedValue(logRegion);
+        this.cloudWatchEndpoint = removeUndefinedValue(cloudWatchEndpoint);
+        this.accessKeyId = removeUndefinedValue(accessKeyId);
+        this.secretAccessKey = removeUndefinedValue(secretAccessKey);
         this.retentionTimeInDays = retentionTimeInDays;
+    }
+
+    private String removeUndefinedValue(String value) {
+        if (isNull(value) || value.contains("UNDEFINED")) {
+            return null;
+        }
+        return value;
+    }
+
+    public boolean isConfigured() {
+        return nonNull(logGroupName)
+               && nonNull(logStreamName)
+               && nonNull(logRegion)
+               && nonNull(accessKeyId)
+               && nonNull(secretAccessKey);
     }
 
     String createLogGroupName(String logGroupName) {
