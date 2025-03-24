@@ -29,7 +29,7 @@ public class CloudWatchAppender extends UnsynchronizedAppenderBase<ILoggingEvent
     @Override
     protected void append(ILoggingEvent iLoggingEvent) {
         boolean offer = logs.offer(iLoggingEvent);
-        if (!offer) {
+        if (! offer) {
             addWarn("Log queue is full, discarding log event: " + iLoggingEvent);
         }
     }
@@ -37,20 +37,30 @@ public class CloudWatchAppender extends UnsynchronizedAppenderBase<ILoggingEvent
     @Override
     public void start() {
         super.start();
-        var configuration = new CloudWatchConfiguration(logGroupName,
-                                                        logStreamName,
-                                                        logRegion,
-                                                        cloudWatchEndpoint,
-                                                        accessKeyId,
-                                                        secretAccessKey,
-                                                        retentionTimeDays);
-        var cloudWatchLogWriter = new CloudWatchLogWriter(configuration);
-        var logbackConfiguration = new LogbackConfiguration(layout, encoder);
+        try {
+            var configuration = new CloudWatchConfiguration(logGroupName,
+                                                            logStreamName,
+                                                            logRegion,
+                                                            cloudWatchEndpoint,
+                                                            accessKeyId,
+                                                            secretAccessKey,
+                                                            retentionTimeDays);
 
-        worker = new Thread(new Worker(logs, cloudWatchLogWriter, logbackConfiguration));
-        worker.setDaemon(true);
-        worker.setName("CloudWatchAppender-Worker");
-        worker.start();
+            if (configuration.isConfigured()) {
+                var cloudWatchLogWriter = new CloudWatchLogWriter(configuration);
+                var logbackConfiguration = new LogbackConfiguration(layout, encoder);
+                worker = new Thread(new Worker(logs, cloudWatchLogWriter, logbackConfiguration));
+                worker.setDaemon(true);
+                worker.setName("CloudWatchAppender-Worker");
+                worker.start();
+            } else {
+                super.stop();
+                addWarn("Failed to start CloudWatchAppender, missing configuration");
+            }
+        } catch (Exception e) {
+            super.stop();
+            addWarn("Failed to start CloudWatchAppender", e);
+        }
     }
 
     @Override

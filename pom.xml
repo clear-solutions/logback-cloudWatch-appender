@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>io.clear-solutions</groupId>
     <artifactId>logback-cloudWatch-appender</artifactId>
-    <version>0.0.3</version>
+    <version>0.0.8</version>
     <name>logback-cloudWatch-appender</name>
     <description>Logback appender for cloudWatch</description>
     <url>http://www.clear-solutions.io</url>
