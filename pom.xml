@@ -42,6 +42,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <software.amazon.awssdk.version>2.23.21</software.amazon.awssdk.version>
+        <commons-codec.version>1.15</commons-codec.version>
         <logback.version>1.4.14</logback.version>
 
         <junit.jupiter.version>5.10.2</junit.jupiter.version>
@@ -59,14 +60,29 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+
+            <!-- Force commons-codec:1.15 to fix version conflict:
+            1.11 from httpclient vs 1.15 from other AWS SDK modules -->
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
     <dependencies>
+        <!-- Exclude slf4j-api:1.7.30 from AWS SDK to avoid conflict with slf4j-api:2.0.7 used by logback-classic -->
         <dependency>
             <groupId>software.amazon.awssdk</groupId>
             <artifactId>cloudwatchlogs</artifactId>
             <version>${software.amazon.awssdk.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -161,6 +177,27 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-enforcer-plugin</artifactId>
+                <version>3.5.0</version>
+                <executions>
+                    <execution>
+                        <id>enforce-rules</id>
+                        <goals>
+                            <goal>enforce</goal>
+                        </goals>
+                        <configuration>
+                            <rules>
+                                <banDuplicatePomDependencyVersions/>
+                                <dependencyConvergence/>
+                            </rules>
+                            <fail>true</fail>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
